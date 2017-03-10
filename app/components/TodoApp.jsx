@@ -13,23 +13,28 @@ var TodoApp = React.createClass({
             todos: [
                 {
                     id: uuid(),
-                    text: 'walk the dog'
+                    text: 'walk the dog',
+                    completed: false
                 },
                 {
                     id: uuid(),
-                    text: 'clearn the yard'
+                    text: 'clearn the yard',
+                    completed: false
                 },
                 {
                     id: uuid(),
-                    text: 'feed the cat'
+                    text: 'feed the cat',
+                    completed: true
                 },
                 {
                     id: uuid(),
-                    text: 'take children to school'
+                    text: 'take children to school',
+                    completed: true
                 },
                 {
                     id: uuid(),
-                    text: 'go to bank'
+                    text: 'go to bank',
+                    completed: true
                 }
             ]
         };
@@ -41,10 +46,22 @@ var TodoApp = React.createClass({
                 ...this.state.todos,
                 {
                     id: uuid(),
-                    text: text
+                    text: text,
+                    completed: false
                 }
             ]
         })
+    },
+
+    handleToggle: function(id){
+        var updateTodos = this.state.todos.map((todo)=>{
+            if(todo.id === id){
+                todo.completed = !todo.completed;
+            }
+            return todo;
+        });
+
+        this.setState({todos: updateTodos});
     },
 
     handleSearch: function(showCompleted, searchText) {
@@ -59,7 +76,7 @@ var TodoApp = React.createClass({
         return(
             <div>
                 <TodoSearch onSearch={this.handleSearch} />
-                <TodoList todos={todos} />
+                <TodoList todos={todos} onToggle={this.handleToggle}/>
                 <AddTodo onAddTodo={this.handleAddTodo} />
             </div>
         );
