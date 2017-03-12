@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
+var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = {
   entry: [
@@ -14,6 +15,11 @@ module.exports = {
     new webpack.ProvidePlugin({
       '$': 'jquery',
       'jQuery': 'jquery'
+    }),
+    new BrowserSyncPlugin({
+      host: 'localhost',
+      port: 3000,
+      server: { baseDir: ['public'] }
     })
   ],
   output: {
@@ -24,7 +30,8 @@ module.exports = {
     root: __dirname,
     modulesDirectories:[
       'node_modules',
-      './app/components'
+      './app/components',
+      './app/api'
     ],
     alias: {
       applicationStyles: 'app/styles/app.scss'
